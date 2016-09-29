@@ -1,16 +1,21 @@
 //Hybrid Sun Tracker System 1.0
 //09282016 - Created draft code based on Servo motor
 //         - added motor pins
-//09292016 - 
+//09292016 - added motor control signals
 
-
+//horizontal motor fixed values
 int hMotCounter = 0; 
 int hLimitHigh = 160;
 int hLimitLow = 20;
 
+//vertical motor fixed values
 int vMotCounter = 0; 
-int vLimitHigh = 160;
+int vLimitHigh = 100;
 int vLimitLow = 20;
+
+//sensor gap/difference limit
+int sensorDiff = 50; 
+
 
 // Motor Pin Map 
 // Upward movement condition ENA = High, IN1 = High, IN2 = Low
@@ -50,9 +55,9 @@ void loop()
   {
     //move vertical motor forward
     vMotorUp(); 
-    if (servov > servovLimitHigh) 	// check for limit switch either replace this with limit switch with debounce
+    if (vMotCounter > vLimitHigh) 	// check for limit switch either replace this with limit switch with debounce
      { 
-      servov = servovLimitHigh;		// flag to indicate already in the limit
+      vMorCounter = vLimitHigh;		// flag to indicate already in the limit
      }
     delay(10);
   }
@@ -61,9 +66,9 @@ void loop()
   {
     // move vertical motor backward
     vMotorDown();
-    if (servov < servovLimitLow)	// check for limit switch either replace this with limit switch with debounce
+    if (vMotCounter < vLimitLow)	// check for limit switch either replace this with limit switch with debounce
   {
-    servov = servovLimitLow;		// flag to indicate already in the limit
+    vMotCounter = vLimitLow;		// flag to indicate already in the limit
   }
     delay(10);
   }
@@ -77,9 +82,9 @@ void loop()
   {
     // move horizontal motor to the right
     hMotorRight();
-    if (servoh > servohLimitHigh)	// check for limit switch either replace this with limit switch with debounce
+    if (hMotCounter > hLimitHigh)	// check for limit switch either replace this with limit switch with debounce
     {
-    servoh = servohLimitHigh;		// flag to indicate already in the limit
+     hMotCounter = hLimitHigh;		// flag to indicate already in the limit
     }
     delay(10);
   }
@@ -88,9 +93,9 @@ void loop()
   {
     // move horizontal motor to the left
     hMotorleft();
-    if (servoh < servohLimitLow)	// check for limit switch either replace this with limit switch with debounce
+    if (hMotCounter < hLimitLow)	// check for limit switch either replace this with limit switch with debounce
      {
-     servoh = servohLimitLow;		// flag to indicate already in the limit
+      hMotCounter = hLimitLow;		// flag to indicate already in the limit
      }
     delay(10);
   }
@@ -104,26 +109,50 @@ void loop()
 
 vMotorUp(){
  //code to tilt upwards
+ digitalWrite(ENA,HIGH);
+ digitalWrite(IN1,HIGH);
+ digitalWrite(IN2,LOW); 
+ 
+ // increment the counters
+ vMotCounter = vMotCounter + 1;
 }
 
 vMotorDown(){
  //code to tilt downwards
+ digitalWrite(ENA,HIGH);
+ digitalWrite(IN1,LOW);
+ digitalWrite(IN2,HIGH); 
+ 
+ // decrement the counters
+ vMotCounter = vMotCounter - 1;
 }
 
 vMotorStop(){
  //code to stop vertical motor
+ digitalWrite (ENA, LOW);
 }
 
 hMotorRight(){
  //code to pan to the right
+ digitalWrite(ENB,HIGH);
+ digitalWrite(IN3,HIGH);
+ digitalWrite(IN4,LOW); 
+ //increment the counters
+ hMotCounter = hMotCounter + 1;
 }
 
 hMotorLeft(){
  //code to pan to the left
+ digitalWrite(ENB,HIGH);
+ digitalWrite(IN3,LOW);
+ digitalWrite(IN4,HIGH); 
+ // decrement the counters
+ hMotCounter = hMotCounter - 1;
 }
 
 hMotorStop(){
  //code to stop horizontal motor
+ digitalWrite (ENB, LOW);
 }
 
  
