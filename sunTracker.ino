@@ -1,6 +1,7 @@
 //Hybrid Sun Tracker System 1.0
 //09282016 - Created draft code based on Servo motor
 //         - added motor pins
+//09292016 - 
 
 
 int hMotCounter = 0; 
@@ -11,8 +12,14 @@ int vMotCounter = 0;
 int vLimitHigh = 160;
 int vLimitLow = 20;
 
-//Motor Pin Map
-int ENA=2, IN1=3, IN2=4, ENB=5, IN3=6, IN4=7
+// Motor Pin Map 
+// Upward movement condition ENA = High, IN1 = High, IN2 = Low
+// Downward movement condition ENA = High, IN1 = Low, IN2 = High
+// pan Right movement condition ENB = High, IN3 = High, IN4 = Low
+// Pan Left movement condition ENB = High, IN3 = Low, IN4 = High
+// Vertical/Horizontal Motor Stop condition ENX = Low or IN1=IN2/IN3=IN4 
+
+int ENA=2, IN1=3, IN2=4, ENB=5, IN3=6, IN4=7;
 
 //Assigning LDRs
 int ldrtopl = 2; //top left LDR green
@@ -94,3 +101,29 @@ void loop()
   }
   delay(50);
 }
+
+vMotorUp(){
+ //code to tilt upwards
+}
+
+vMotorDown(){
+ //code to tilt downwards
+}
+
+vMotorStop(){
+ //code to stop vertical motor
+}
+
+hMotorRight(){
+ //code to pan to the right
+}
+
+hMotorLeft(){
+ //code to pan to the left
+}
+
+hMotorStop(){
+ //code to stop horizontal motor
+}
+
+ 
